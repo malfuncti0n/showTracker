@@ -6,12 +6,23 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "async": "^2.1.5",
+    "bcryptjs": "^2.4.3",
     "body-parser": "~1.16.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.0",
     "express": "~4.14.1",
     "jade": "~1.11.0",
+    "lodash": "^4.17.4",
+    "mongoose": "^4.8.7",
     "morgan": "~1.7.0",
-    "serve-favicon": "~2.3.2"
+    "request": "^2.81.0",
+    "serve-favicon": "~2.3.2",
+    "xml2js": "^0.4.17"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sass": "^3.1.0"
   }
 }
