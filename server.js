@@ -99,7 +99,7 @@ app.get('/api/shows', function(req, res, next) {
   }
   query.exec(function(err, shows) {
     if (err) return next(err);
-    res.send(shows);
+    res.status(200).send(shows);
   });
 });
 
@@ -107,13 +107,13 @@ app.get('/api/shows', function(req, res, next) {
 app.get('/api/shows/:id', function(req, res, next) {
   Show.findById(req.params.id, function(err, show) {
     if (err) return next(err);
-    res.send(show);
+    res.status(200).send(show);
   });
 });
 
 app.use(function(err, req, res, next) {
   console.error(err.stack);
-  res.status(500).send({message: err.message});
+  res.status(404).send({message: err.message});
 });
 
 app.listen(app.get('port'), function() {
