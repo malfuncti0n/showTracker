@@ -76,13 +76,45 @@ mongoose.connect("mongodb://localhost:27017/show", function(err,db){
     }
 })
 
-
+//midleware
 app.set('port', process.env.PORT || 3000);
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( {extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+//routes
+
+//route for all shows
+app.get('/api/shows', function(req, res, next) {
+  var query = Show.find();
+  if (req.query.genre) {
+    query.where({ genre: req.query.genre });
+  } else if (req.query.alphabet) {
+    query.where({ name: new RegExp('^' + '[' + req.query.alphabet + ']', 'i') });
+  } else {
+    query.limit(12);
+  }
+  query.exec(function(err, shows) {
+    if (err) return next(err);
+    res.send(shows);
+  });
+});
+
+//route for specific show
+app.get('/api/shows/:id', function(req, res, next) {
+  Show.findById(req.params.id, function(err, show) {
+    if (err) return next(err);
+    res.send(show);
+  });
+});
+
+app.use(function(err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send({message: err.message});
+});
 
 app.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));
